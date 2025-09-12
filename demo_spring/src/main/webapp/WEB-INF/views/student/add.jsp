@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>Thêm mới</h1>
-<form action="students/add" method="post">
+<form action="/students/add" method="post">
     <input name="id">
     <input name="name">
     <button>save</button>
