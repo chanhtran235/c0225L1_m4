@@ -10,9 +10,24 @@ import java.util.List;
 @Service
 public class StudentService implements IStudentService{
     @Autowired
-    private IStudentRepository studentRepository;
+    private IStudentRepository studentRepository ;
+
+//    public StudentService(IStudentRepository studentRepository) {
+//        this.studentRepository = studentRepository;
+//    }
+
     @Override
     public List<Student> findAll() {
         return studentRepository.findAll();
+    }
+
+    @Override
+    public Student findById(int id) {
+        return studentRepository.findById(id);
+    }
+
+    @Override
+    public boolean add(Student student) {
+        return studentRepository.add(student);
     }
 }
