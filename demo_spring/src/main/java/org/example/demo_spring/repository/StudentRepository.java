@@ -4,17 +4,20 @@ import org.example.demo_spring.entity.Student;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 
+
+@Repository
 public class StudentRepository implements IStudentRepository {
 
     private static List<Student> studentList = new ArrayList<>();
     static {
-        studentList.add(new Student(1,"chánh"));
-        studentList.add(new Student(2,"chánh2"));
-        studentList.add(new Student(3,"chánh3"));
+        studentList.add(new Student(1,"chánh1",true, Arrays.asList("java","js","php"),"C02"));
+        studentList.add(new Student(2,"chánh1",true, Arrays.asList("java","js","php"),"C02"));
+        studentList.add(new Student(3,"chánh1",true, Arrays.asList("java","js","php"),"C02"));
     }
 
     @Override

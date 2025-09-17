@@ -1,12 +1,54 @@
 package org.example.demo_spring.entity;
 
+import java.util.List;
+
 public class Student {
     private int id;
     private String name;
 
+    private boolean gender;
+    private List<String> subjects;
+
+    private String className;
+
+    public Student() {
+    }
+
     public Student(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Student(int id, String name, boolean gender, List<String> subjects, String className) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.subjects = subjects;
+        this.className = className;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public List<String> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public int getId() {

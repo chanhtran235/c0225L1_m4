@@ -10,9 +10,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 @RequestMapping ("/students")
 public class StudentController {
+    @ModelAttribute("subjects")
+    public List<String> getSubjects(){
+        return Arrays.asList("JAVA", "PHP","SQL");
+    }
     @Autowired
     private IStudentService studentService;
 
@@ -24,14 +31,14 @@ public class StudentController {
     }
 
     @GetMapping ("/add")
-    public String showFormAdd( ){
+    public String showFormAdd(Model model){
+        model.addAttribute("student", new Student());
         return "/student/add";
     }
     @PostMapping("/add")
-    public String save(@RequestParam(name = "id") int id,
-                       @RequestParam(name = "name") String name,
+    public String save(@ModelAttribute(name = "student") Student student,
                        RedirectAttributes redirectAttributes){
-        studentService.add(new Student(id,name));
+        studentService.add(student);
         redirectAttributes.addFlashAttribute("mess","add success");
         return "redirect:/students";
     }
@@ -44,7 +51,7 @@ public class StudentController {
         return "/student/detail";
     }
 
-    @GetMapping("/detail/{id:[12]}")
+    @GetMapping("/detail/{id}")
     public String detail2(@PathVariable(name = "id")int id,
                          Model model
     ){
