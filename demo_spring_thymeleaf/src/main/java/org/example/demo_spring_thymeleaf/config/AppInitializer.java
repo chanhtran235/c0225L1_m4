@@ -1,4 +1,4 @@
-package com.example.demo_thymeleaf2.config;
+package org.example.demo_spring_thymeleaf.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

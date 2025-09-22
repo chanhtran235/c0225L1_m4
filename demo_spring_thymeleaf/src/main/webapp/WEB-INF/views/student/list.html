@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <th:block th:insert="~{/layout/layout::library}"/>
+</head>
+<body>
+<div th:replace="~{/layout/layout::header}"></div>
+<a href="/students/add">Thêm mới</a>
+<a th:href="@{/students/add}">Thêm mới</a>
+<table class="table table-dark">
+    <tr>
+        <th>STT</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Subject</th>
+        <th>Classname</th>
+        <th>RP-Detail</th>
+        <th>PV-Detail</th>
+    </tr>
+
+    <tr th:each="student,status:${studentList}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${student.id}"></td>
+        <td th:text="${student.name}"></td>
+        <td th:text="${student.gender}"></td>
+        <td>
+            <span th:each="subject:${student.subjects}" th:text="${subject}"></span>
+        </td>
+        <td th:text="${student.className}"></td>
+        <td>
+            <a th:href="@{/students/detail(id=${student.id})}">Detail</a>
+        </td>
+        <td>
+            <a th:href="@{/students/detail/__${student.id}__}">Detail</a>
+        </td>
+    </tr>
+    <tr>
+        <td th:if="${studentList.isEmpty()}" colspan="8" th:text="#{isEmpty}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,6 +1,7 @@
-package com.example.demo_thymeleaf2;
+package org.example.demo_spring_thymeleaf;
 
 import java.io.*;
+
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 

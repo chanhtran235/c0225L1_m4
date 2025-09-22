@@ -1,4 +1,4 @@
-package com.example.demo_thymeleaf2.config;
+package org.example.demo_spring_thymeleaf.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -9,16 +9,17 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.example")
-public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
+@ComponentScan("org.example")
+public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
@@ -27,7 +28,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         this.applicationContext = applicationContext;
     }
 
-
+    // Thymeleaf Template Resolver
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -39,13 +40,16 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         return templateResolver;
     }
 
+    // Thymeleaf Template Engine
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.setEnableSpringELCompiler(true); // nên bật
         return templateEngine;
     }
 
+    // Thymeleaf View Resolver
     @Bean
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
@@ -53,8 +57,8 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         viewResolver.setCharacterEncoding("UTF-8");
         return viewResolver;
     }
-    
- // config file message
+
+    // config file message
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
@@ -62,5 +66,6 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
         messageSource.setDefaultEncoding("UTF-8");
         return messageSource;
     }
+
 
 }
