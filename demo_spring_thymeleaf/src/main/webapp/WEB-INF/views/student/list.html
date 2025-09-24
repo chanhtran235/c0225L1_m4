@@ -15,7 +15,6 @@
         <th>ID</th>
         <th>Name</th>
         <th>Gender</th>
-        <th>Subject</th>
         <th>Classname</th>
         <th>RP-Detail</th>
         <th>PV-Detail</th>
@@ -25,9 +24,9 @@
         <td th:text="${status.count}"></td>
         <td th:text="${student.id}"></td>
         <td th:text="${student.name}"></td>
-        <td th:text="${student.gender}"></td>
         <td>
-            <span th:each="subject:${student.subjects}" th:text="${subject}"></span>
+        <span th:if="${student.gender}" th:text="'Nam'"></span>
+        <span th:unless="${student.gender}" th:text="'Nữ'"></span>
         </td>
         <td th:text="${student.className}"></td>
         <td>

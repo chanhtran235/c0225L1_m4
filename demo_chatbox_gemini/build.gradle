@@ -23,17 +23,10 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     compileOnly('jakarta.servlet:jakarta.servlet-api:5.0.0')
-    // Spring MVC
-    implementation "org.springframework:spring-webmvc:6.2.10"
-
-    // Thymeleaf 6 + Spring integration
-    implementation "org.thymeleaf:thymeleaf-spring6:3.1.2.RELEASE"
-    implementation "org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE"
-
-    implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
-
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-
+    implementation('org.glassfish.jersey.containers:jersey-container-servlet:3.0.13')
+    implementation('org.glassfish.jersey.media:jersey-media-json-jackson:3.0.13')
+    implementation('org.glassfish.jersey.inject:jersey-cdi2-se:3.0.13')
+    implementation('org.jboss.weld.se:weld-se-core:4.0.3.Final')
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
