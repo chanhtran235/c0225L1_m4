@@ -2,13 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Quản lý sinh viên</title>
     <th:block th:insert="~{/layout/layout::library}"/>
 </head>
 <body>
 <div th:replace="~{/layout/layout::header}"></div>
 <a href="/students/add">Thêm mới</a>
 <a th:href="@{/students/add}">Thêm mới</a>
+<form action="/students/search" method="get">
+    <input name="searchName" placeholder="Nhập tên">
+    <button>Tìm kiếm</button>
+</form>
 <table class="table table-dark">
     <tr>
         <th>STT</th>
@@ -36,9 +40,9 @@
             <a th:href="@{/students/detail/__${student.id}__}">Detail</a>
         </td>
     </tr>
-<!--    <tr>-->
-<!--        <td th:if="${studentList.isEmpty()}" colspan="8" th:text="#{isEmpty}"></td>-->
-<!--    </tr>-->
+    <tr>
+        <td th:if="${studentList.isEmpty()}" colspan="8" th:text="#{isEmpty}"></td>
+    </tr>
 </table>
 </body>
 </html>
