@@ -19,11 +19,10 @@ public class Student {
     private int id;
     private String name;
     private boolean gender;
-    private String className;
     @OneToOne
     @JoinColumn(name = "username", unique = true)
     private Jame jame;
     @ManyToOne
-    @JoinColumn(name = "class_id", unique = true)
+    @JoinColumn(name = "class_id")
     private ClassCG classCG;
 }

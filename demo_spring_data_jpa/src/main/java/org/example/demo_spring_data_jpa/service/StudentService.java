@@ -3,6 +3,8 @@ package org.example.demo_spring_data_jpa.service;
 import org.example.demo_spring_data_jpa.entity.Student;
 import org.example.demo_spring_data_jpa.repository.IStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +19,15 @@ public class StudentService implements IStudentService{
     }
 
     @Override
-    public List<Student> searchByName(String name) {
-        return studentRepository.findAllByNameContainingAndClassNameContaining(name,"");
+    public Page<Student> findAll(String name, Pageable pageable) {
+        return studentRepository.findAllByNameContaining(name,pageable);
     }
+
+    @Override
+    public List<Student> searchByName(String name) {
+        return studentRepository.findAllByNameContaining(name);
+    }
+
 
     @Override
     public Student findById(int id) {
