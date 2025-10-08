@@ -8,17 +8,20 @@
 <body>
 <div th:replace="~{/layout/layout::header}"></div>
 <h1>Thêm mới</h1>
-<form action="/students/add" method="post" th:object="${student}">
+<form action="/students/add" method="post" th:object="${studentDto}">
     Name:
     <input th:field="*{name}"/><br>
+    <small class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small><br>
     Gender
     <input type="radio" th:field="*{gender}" value="1"/>Male
     <input type="radio" th:field="*{gender}" value="0"/>Female<br>
-    Subjects
+    Class name
     <select th:field="*{classCG}">
         <option value="">---Chọn lớp------</option>
         <option th:each="cls:${classList}" th:value="${cls.id}" th:text="${cls.name}"></option>
     </select><br>
+    <small class="text-danger" th:if="${#fields.hasErrors('classCG')}" th:errors="*{classCG}"></small><br>
+
     <button>Lưu</button>
 </form>
 </body>

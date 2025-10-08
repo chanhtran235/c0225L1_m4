@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Thống kê số lượng học viên</h2>
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>Tên lớp</th>
+        <th>Số lượng</th>
+    </tr>
+    <tr th:each="cls,status: ${classList}">
+        <td th:text="${status.count}"></td>
+        <td th:text="${cls.getName()}"></td>
+        <td th:text="${cls.getQuality()}"></td>
+    </tr>
+
+</table>
+</body>
+</html>
