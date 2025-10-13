@@ -3,6 +3,7 @@ package org.example.demo_spring_data_jpa.controller;
 import jakarta.validation.Valid;
 import org.example.demo_spring_data_jpa.dto.StudentDto;
 import org.example.demo_spring_data_jpa.entity.Student;
+import org.example.demo_spring_data_jpa.exception.DuplicateAdminException;
 import org.example.demo_spring_data_jpa.service.IClassService;
 import org.example.demo_spring_data_jpa.service.IStudentService;
 import org.example.demo_spring_data_jpa.validation.StudentValidate;
@@ -27,10 +28,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/students")
 public class StudentController {
-    @ModelAttribute("subjects")
-    public List<String> getSubjects() {
-        return Arrays.asList("JAVA", "PHP", "SQL");
-    }
 
     @Autowired
     private IStudentService studentService;
@@ -71,7 +68,8 @@ public class StudentController {
     public String save(@Validated @ModelAttribute(name = "studentDto") StudentDto studentDto,
                        BindingResult bindingResult,
                        RedirectAttributes redirectAttributes,
-                       Model model) {
+                       Model model) throws DuplicateAdminException {
+
         StudentValidate studentValidate = new StudentValidate();
         studentValidate.validate(studentDto,bindingResult);
 
@@ -102,5 +100,12 @@ public class StudentController {
         model.addAttribute("student", student);
         return "student/detail";
     }
+
+
+    @ExceptionHandler(DuplicateAdminException.class)
+    public String handleDuplicate(){
+        return "client-exception";
+    }
+
 
 }
