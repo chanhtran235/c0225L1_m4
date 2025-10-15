@@ -11,6 +11,7 @@ public interface IStudentService {
     List<Student> findAll();
 
     Page<Student> findAll(String name,Pageable pageable);
+    Page<Student> findAll(Pageable pageable);
 
     List<Student> searchByName(String name);
 
