@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.6.0.js"></script>
+</head>
+<body>
+<div>
+    <input id="name" placeholder="enter name"><br>
+    <small style="color: red" id="errorName"></small>
+    <input type="radio" name="gender" value="false">Female
+    <input type="radio" name="gender" value="true"> Male<br>
+    <select id="classId">
+        <option value="0">Chọn lớp</option>
+        <option value="1">C02</option>
+        <option value="2">C03</option>
+    </select>
+    <button id="btn-add">Save</button>
+</div>
+
+<h1>Danh sách</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Class Name</th>
+    </tr>
+    </thead>
+    <tbody id="content">
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    </tbody>
+
+</table>
+<script>
+
+    $(document).ready(function () {
+        // setTimeout(display,6000);
+        display();
+        $("#btn-add").click(function () {
+             let name = $("#name").val();
+             let gender =$("input[name ='gender']:checked").val();
+             let classId = $("#classId").val();
+             let student = {
+                 name :name,
+                 gender: gender,
+                 classCG: {
+                     id: classId
+                 }
+             }
+
+            console.log(student);
+
+            $.ajax({
+                url: `http://localhost:8080/v1/api/students`,
+                method: "post",
+                contentType: "application/json",
+                data: JSON.stringify(student),
+                success: function (data) {
+                    console.log("Thành công");
+                    display();
+                },
+                complete: function (res){
+                    console.log("luôn cháy")
+                },
+                error: function (res){
+                    console.log(res);
+                    console.log(res.status);
+                    console.log(res.responseJSON);
+                    $("#errorName").text(res.responseJSON.name);
+                }
+            })
+        })
+
+        function add() {
+
+        }
+
+        function display() {
+            $.ajax({
+                url: `http://localhost:8080/v1/api/students`,
+                method: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    let content = "";
+                    for (let i = 0; i < data.length; i++) {
+                        content += `    <tr>
+                                            <td>${i + 1}</td>
+                                            <td>${data[i].name}</td>
+                                            <td>${data[i].gender}</td>
+                                            <td>${data[i].classCG.name}</td>
+                                        </tr>`
+                    }
+                    $("#content").html(content);
+
+                }
+            })
+        }
+
+    });
+
+</script>
+<h1>footer</h1>
+</body>
+</html>

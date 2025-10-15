@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.6.0.js"></script>
+</head>
+<body>
+<h1>Danh sách</h1>
+<div>
+    <input id="name" placeholder="enter name"><br>
+    <input type="radio" value="true" name="gender"> Male
+    <input type="radio" value="false" name="gender"> Female<br>
+    <select id="classId">
+        <option value="1">C02</option>
+        <option value="2">C03</option>
+    </select>
+    <button id="btn-save">Save</button>
+</div>
+<table>
+    <tr>
+        <td>STT</td>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Gender</td>
+        <td>Class name</td>
+    </tr>
+    <tbody id="content">
+
+    </tbody>
+</table>
+<button id="btn-more">Xem thêm</button>
+<h1>Footer</h1>
+
+<script>
+    $(document).ready(function (){
+        let page =0;
+        display();
+        $('#btn-more').click(displayMore);
+        $('#btn-save').click(save);
+
+
+        function save(){
+            let name = $("#name").val();
+            let gender = $('input[name="gender"]:checked').val();
+            let classId = $("#classId").val();
+            const student = {
+                name,
+                gender,
+                classCG: {
+                    id: classId
+                }
+            }
+            console.log(student)
+            $.ajax({
+                url:`http://localhost:8080/v1/api/students`,
+                dataType: "json",
+                contentType: "application/json",
+                type: "post",
+                data: JSON.stringify(student),
+                complete: function ( data, textStatus, res){
+                    console.log("thêm mới thành công")
+                    console.log(res.status);
+                    page=0;
+                    display(page);
+                },
+                error: function (res){
+                    console.log("-----------lỗi---------")
+                    console.log(res.status)
+                }
+            });
+        }
+        function displayMore(){
+            page++;
+            display();
+        }
+
+        function display(){
+            $.ajax({
+                url:`http://localhost:8080/v1/api/students?page=${page}`,
+                dataType: "json",
+                type: "get",
+                success: function ( data, textStatus, res){
+                    console.log("------data------------");
+                    let content ="";
+                    for (let i = 0; i <data.content.length ; i++) {
+                        content +=`    <tr>
+                                        <td>${data.content[i].id}</td>
+                                        <td>${data.content[i].name}</td>
+                                        <td>${data.content[i].gender}</td>
+                                        <td>${data.content[i].classCG.name}</td>
+                                    </tr>`
+                    }
+                    $("#content").append(content)
+                    console.log(data);
+                    console.log(textStatus)
+                    console.log(res.status)
+                },
+                error: function (res){
+                    console.log("-----------lỗi---------")
+                    console.log(res.status)
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
